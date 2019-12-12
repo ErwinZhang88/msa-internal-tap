@@ -17,11 +17,6 @@
             try {
                 let sql, binds, options, result;
                 connection = await OracleDB.getConnection( config.database );
-                // var location_code = '2121A';
-                // 	location_code = location_code.split( ',' );
-                // 	location_code = location_code.join( '\',\'' );
-                // 	location_code = '\'' + location_code + '\''
-                //     console.log( location_code );
                 sql = `
                     SELECT 
                         restan.oph AS OPH, 
@@ -69,9 +64,6 @@
                     // fetchArraySize: 100
                 };
                 result = await connection.execute( sql, binds, options );
-                // console.log( "Column metadata: ", result.metaData );
-                // console.log( "Query results: ");
-                // console.log( result.rows );
                 if ( result ) {
                     console.log( result.rows.length );
                     result.rows.forEach( function ( row ) {
@@ -95,32 +87,18 @@
                                 BLOCK_CODE: row.BLOCK_CODE,
                                 BLOCK_NAME: row.BLOCK_NAME
                             }
-                            // Kafka.producer( 'WEB_REPORT_TITIK_RESTAN', JSON.stringify( kafkaBody ) );	
-                            console.log( kafkaBody );
+                            Kafka.producer( 'WEB_REPORT_TITIK_RESTAN', JSON.stringify( kafkaBody ) );	
                         }
                     } )
                 }
-                // return res.json( {
-                //     message: "OK",
-                //     data: []
-                // } );
-
             } catch ( err ) {
                 console.error(err);
-                // return res.json( {
-                //     message: err.message,
-                //     data: []
-                // } );
             } finally {
                 if ( connection ) {
                     try {
                         await connection.close();
                     } catch ( err ) {
                         console.error( err.message );
-                        // return res.json( {
-                        //     message: "Error 2",
-                        //     data: []
-                        // } );
                     }
                 }
             }
