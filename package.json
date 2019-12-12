@@ -1,0 +1,19 @@
+{
+  "name": "oracle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cron": "^1.7.2",
+    "express": "^4.17.1",
+    "kafka-node": "^5.0.0",
+    "moment-timezone": "^0.5.27",
+    "oracledb": "^4.0.1"
+  }
+}
