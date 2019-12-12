@@ -95,7 +95,7 @@
                             BLOCK_CODE: row.BLOCK_CODE,
                             BLOCK_NAME: row.BLOCK_NAME
                         }
-                        Kafka.producer( 'WEB_REPORT_TITIK_RESTAN', JSON.stringify( kafkaBody ) );	
+                        // Kafka.producer( 'WEB_REPORT_TITIK_RESTAN', JSON.stringify( kafkaBody ) );	
                     }
                 } )
             }

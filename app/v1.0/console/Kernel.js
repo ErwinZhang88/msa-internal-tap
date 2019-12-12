@@ -8,8 +8,8 @@
  */
     const OracleDB = require( 'oracledb' );
     // Primary Variable
-    const Kafka = require( _directory_base + '/app/v1.0/http/libraries/KafkaServer.js' );
-    const Helper = require( _directory_base + '/app/v1.0/http/libraries/Helper.js' )
+    const Kafka = require( _directory_base + '/app/v1.0/Http/Libraries/KafkaServer.js' );
+    const Helper = require( _directory_base + '/app/v1.0/Http/Libraries/Helper.js' )
 
     class Kernel {
         async pushKafka() {
