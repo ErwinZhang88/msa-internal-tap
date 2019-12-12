@@ -17,9 +17,9 @@
             app.get( '/', ( req, res ) => {
                 return res.json( { 
                     application: {
-                        name : 'Microservice Test'
-                        // env : config.app.env,
-                        // port : config.app.port[config.app.env]
+                        name : 'Microservice Internal TAP'
+                        env : config.app.env,
+                        port : config.app.port[config.app.env]
                     } 
                 } )
             } );
