@@ -5,7 +5,7 @@
  */
     //Controllers
     const Controller = {
-        ExportKafka : require( _directory_base + '/app/v1.0/http/controllers/ExportKafkaController.js' )
+        ExportKafka : require( _directory_base + '/app/v1.0/Http/Controllers/ExportKafkaController.js' )
     }
     module.exports = ( app ) => {
 
