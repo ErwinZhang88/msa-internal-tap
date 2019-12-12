@@ -10,7 +10,6 @@
 		| App Config
 		|--------------------------------------------------------------------------
 		*/
-			port: process.env.PORT || 3010,
 			name: 'Microservice Internal TAP',
 			env: 'dev', // prod, qa, dev,
 			port: {

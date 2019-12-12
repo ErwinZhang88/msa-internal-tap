@@ -39,7 +39,7 @@
 		console.log( "\tPort \t\t: " + config.app.port[config.app.env] );
 	} );
 	//Kernel
-	const Kernel = require( _directory_base + '/app/v1.0/console/Kernel.js' );
+	const Kernel = require( _directory_base + '/app/v1.0/Console/Kernel.js' );
 
 /*
  |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@
  | Cron
  |--------------------------------------------------------------------------
  */
-	new CronJob( '30 2 * * *', function () {
+	new CronJob( '30 02 * * *', function () {
 		// var claims = {
 		// 	USERNAME: 'ferdinand',
 		// 	USER_AUTH_CODE: '0102',
