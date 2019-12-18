@@ -31,4 +31,5 @@
         */
         app.get( '/api/v1.0/push-kafka', Controller.ExportKafka.pushKafka );
      app.get( '/api/v1.0/push-kafka2', Controller.ExportKafka.pushKafka );
+ app.get( '/api/v1.0/push-kafka3', Controller.ExportKafka.pushKafka );
     }
