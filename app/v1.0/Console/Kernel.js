@@ -26,7 +26,7 @@
                         restan.longitude, 
                         SUM (jml_jjg) AS JML_JANJANG, 
                         SUM (jml_brondolan) AS JML_BRONDOLAN, 
-                        SUM (kg_taksasi) AS KG_TAKSASI, 
+                        ROUND(SUM (kg_taksasi)) AS KG_TAKSASI, 
                         restan.tgl_report, 
                         restan.werks, 
                         est.est_name, 
