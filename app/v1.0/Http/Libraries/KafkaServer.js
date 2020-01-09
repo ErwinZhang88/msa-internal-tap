@@ -68,12 +68,12 @@ const Kafka = require( 'kafka-node' );
 				}
 			];
 
-			producer_kafka_client.on( 'ready', async function() {
+			producer_kafka_client.on( 'ready', function() {
 				const push_status = producer_kafka_client.send( payloads, ( err, data ) => {
 					if ( err ) {
-						console.log( '[KAFKA PRODUCER] - Broker Update Failed.', err );
+						console.log( '[KAFKA PRODUCER] - Broker Update Failed.', messages );
 					} else {
-						console.log( '[KAFKA PRODUCER] - Broker Update Success.' );
+						// console.log( '[KAFKA PRODUCER] - Broker Update Success.' );
 					}
 				} );
 			} );

@@ -42,7 +42,7 @@
                     tap_dw.tr_hv_restant_detail@proddw_link restan 
                     LEFT JOIN tap_dw.tm_est@proddw_link est ON restan.werks = est.werks 
                 WHERE 
-                    restan.tgl_report = TRUNC (SYSDATE - 1) 
+                    restan.tgl_report = TRUNC (SYSDATE) 
                     AND restan.latitude != '0' 
                     AND restan.status_bcc = 'RESTAN' 
                 GROUP BY 
@@ -95,7 +95,7 @@
                             BLOCK_CODE: row.BLOCK_CODE,
                             BLOCK_NAME: row.BLOCK_NAME
                         }
-                        // Kafka.producer( 'WEB_REPORT_TITIK_RESTAN', JSON.stringify( kafkaBody ) );	
+                        Kafka.producer( 'WEB_REPORT_TITIK_RESTAN', JSON.stringify( kafkaBody ) );	
                     }
                 } )
             }
