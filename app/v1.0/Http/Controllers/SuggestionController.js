@@ -130,7 +130,7 @@
                 }
             }
             let serviceImage = config.app.url[config.app.env].microservice_images;
-            let request = client.post( 'http://localhost:4012/api/v2.0/inspection/suggestion', args, function ( data, response ) {
+            let request = client.post( serviceImage + '/api/v2.0/inspection/suggestion', args, function ( data, response ) {
                 if (data) {
                     result.rows.forEach(function (rs) {
                         let werksAfdBlockCode = rs.WERKS + rs.AFD_CODE + rs.BLOCK_CODE;
