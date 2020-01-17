@@ -129,7 +129,8 @@
                     "Authorization": req.headers.authorization
                 }
             }
-            let request = client.post( 'http://149.129.250.199:4012/api/v2.0/inspection/suggestion', args, function ( data, response ) {
+            let serviceImage = config.app.url[config.app.env].microservice_images;
+            let request = client.post( serviceImage + '/api/v2.0/inspection/suggestion', args, function ( data, response ) {
                 if (data) {
                     result.rows.forEach(function (rs) {
                         let werksAfdBlockCode = rs.WERKS + rs.AFD_CODE + rs.BLOCK_CODE;
@@ -202,7 +203,6 @@
                         });
 
                         sortingData.sort((a,b) => (a.INS_DATE > b.INS_DATE) ? 1 : ((b.INS_DATE > a.INS_DATE) ? -1 : 0)); 
-                        console.log(sortingData);
                         let dataTipeInspeksi = [];
                         for (let i = 1; i <= 3; i++) {
                             dataTipeInspeksi.push({
