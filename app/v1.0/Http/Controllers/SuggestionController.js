@@ -242,6 +242,11 @@
            
             request.on( 'error', ( err ) => {
                 console.log( `FINDING ${err.message}` );
+                return res.send({
+                    status: false,
+                    message: 'Internal Server Error',
+                    data: []
+                });
             } );
         } catch (error) {
             res.send({
