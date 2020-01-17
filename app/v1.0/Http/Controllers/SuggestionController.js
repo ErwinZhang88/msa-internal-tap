@@ -119,8 +119,7 @@
                     outFormat: OracleDB.OUT_FORMAT_OBJECT
                 };
                 resultSqlStatement = await connection.execute(sqlStatement, bindsSqlStatement, optionsSqlStatement);
-                let arrayTRCode = (resultSqlStatement.rows[0] == '' ? [] : resultSqlStatement.rows[0].TR_CODE.split( ',' ) );
-                
+                let arrayTRCode = (resultSqlStatement.rows[0].TR_CODE == null ? [] : resultSqlStatement.rows[0].TR_CODE.split( ',' ) );
                 arrayGetImageByTRCode[werksAfdBlockCode] = arrayTRCode;
             }));
             let args = {
@@ -147,31 +146,79 @@
                         });
 
                         let cptDesc = ( rs.RAW_CPT_DATE != null ? dateFormat(rs.RAW_CPT_DATE, "d mmm yyyy") : '-' ) + 
-                                        ', ' + (rs.RAW_CPT_HA != null ? rs.RAW_CPT_HA: '-') + ' Ha, ' +
-                                        (rs.RAW_CPT_HK != null ? rs.RAW_CPT_HK : '-') + 'HK';
+                                        ', ' + (rs.RAW_CPT_HA != null ? Math.round(rs.RAW_CPT_HA * 100) / 100: '-') + ' Ha, ' +
+                                        (rs.RAW_CPT_HK != null ? Math.round(rs.RAW_CPT_HK * 100) / 100 : '-') + 'HK';
                         let spotDesc = ( rs.RAW_SPOT_DATE != null ? dateFormat(rs.RAW_SPOT_DATE, "d mmm yyyy") : '-' ) + 
-                                        ', ' + (rs.RAW_SPOT_HA != null ? rs.RAW_SPOT_HA: '-') + ' Ha, ' +
-                                        (rs.RAW_SPOT_HK != null ? rs.RAW_SPOT_HK : '-') + 'HK';
+                                        ', ' + (rs.RAW_SPOT_HA != null ? Math.round(rs.RAW_SPOT_HA * 100) / 100: '-') + ' Ha, ' +
+                                        (rs.RAW_SPOT_HK != null ? Math.round(rs.RAW_SPOT_HK * 100) / 100 : '-') + 'HK';
                         let lalangDesc = ( rs.RAW_LALANG_DATE != null ? dateFormat(rs.RAW_LALANG_DATE, "d mmm yyyy") : '-' ) + 
-                                        ', ' + (rs.RAW_LALANG_HA != null ? rs.RAW_LALANG_HA: '-') + ' Ha, ' +
-                                        (rs.RAW_LALANG_HK != null ? rs.RAW_LALANG_HK : '-') + 'HK';
+                                        ', ' + (rs.RAW_LALANG_HA != null ? Math.round(rs.RAW_LALANG_HA * 100) / 100: '-') + ' Ha, ' +
+                                        (rs.RAW_LALANG_HK != null ? Math.round(rs.RAW_LALANG_HK * 100) / 100 : '-') + 'HK';
                         dataArray.push({
                             TYPE:'rawat',
-                            DATE: Helper.date_format(rs.RAW_DATE, 'YYYY-MM-DD hh:mm:ss'),
+                            DATE: dateFormat(rs.RAW_DATE, 'yyyy-mm-dd 00:00:00'),
                             DESC: 'Rawat',
                             DATA: {
                                 CPT_SPRAYING: cptDesc,
-                                SPOT_DESC: spotDesc,
+                                SPOT_SPRAYING: spotDesc,
                                 LALANG_CTRL: lalangDesc
                             }
                         });
                         dataArray.push({
                             TYPE:'panen',
-                            DATE: Helper.date_format(rs.PAN_DATE, 'YYYY-MM-DD hh:mm:ss'),
+                            DATE: dateFormat(rs.PAN_DATE, 'yyyy-mm-dd 00:00:00'),
                             DESC: 'Panen',
                             DATA: dt
                         });
 
+                        let sortingData = [];
+                        sortingData.push({
+                            INS_DATE: rs.INS_DATE1,
+                            INS_ROLE: rs.INS_ROLE1.replace('_', ' '),
+                            INS_BARIS: rs.INS_BARIS1
+                        });
+                        sortingData.push({
+                            INS_DATE: rs.INS_DATE2,
+                            INS_ROLE: rs.INS_ROLE2.replace('_', ' '),
+                            INS_BARIS: rs.INS_BARIS2
+                        });
+                        sortingData.push({
+                            INS_DATE: rs.INS_DATE3,
+                            INS_ROLE: rs.INS_ROLE3.replace('_', ' '),
+                            INS_BARIS: rs.INS_BARIS3
+                        });
+                        sortingData.push({
+                            INS_DATE: rs.INS_DATE4,
+                            INS_ROLE: rs.INS_ROLE4.replace('_', ' '),
+                            INS_BARIS: rs.INS_BARIS4
+                        });
+
+                        let n = 31;
+                        sortingData.forEach(function (sd) {
+                            if (sd.INS_DATE == null) {
+                                sd.INS_DATE = dateFormat('9999-12-' + n, 'yyyy-mm-dd 00:00:00');
+                                n--;
+                            }
+                        });
+
+                        sortingData.sort((a,b) => (a.INS_DATE > b.INS_DATE) ? 1 : ((b.INS_DATE > a.INS_DATE) ? -1 : 0)); 
+                        console.log(sortingData);
+                        let dataTipeInspeksi = [];
+                        for (let i = 1; i <= 3; i++) {
+                            dataTipeInspeksi.push({
+                                ROLE: sortingData[i].INS_ROLE,
+                                DATE_ROLE: (sortingData[i].INS_DATE != null ? dateFormat(sortingData[i].INS_DATE, 'yyyy-mm-dd 00:00:00') : ''),
+                                BARIS: sortingData[i].INS_BARIS
+                            });
+                        }
+
+                        dataArray.push({
+                            TYPE:'inspeksi',
+                            DATE: (sortingData[0].INS_DATE != null ? dateFormat(sortingData[0].INS_DATE, 'yyyy-mm-dd 00:00:00') : ''),
+                            DESC: sortingData[0].INS_ROLE,
+                            BARIS: sortingData[0].INS_BARIS,
+                            DATA: dataTipeInspeksi
+                        });
                         responseForMobile.push({
                             LOCATION_CODE: rs.LOCATION_CODE,
                             WERKS: rs.WERKS,
@@ -181,13 +228,13 @@
                             BLOCK_NAME: rs.BLOCK_NAME,
                             IMAGE: imageUrl,
                             IMAGE_NAME: imageName,
-                            DATA: dataArray
+                            DATA_ARRAY: dataArray
                         });
                         // console.log(rs);
                     });
                     res.send({
                         status: true,
-                        message: 'success',
+                        message: 'OK',
                         data: responseForMobile
                     })
                 }
