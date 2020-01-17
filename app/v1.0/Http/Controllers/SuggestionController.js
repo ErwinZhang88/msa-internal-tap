@@ -244,7 +244,11 @@
                 console.log( `FINDING ${err.message}` );
             } );
         } catch (error) {
-            console.log(error);
+            res.send({
+                status: false,
+                message: 'Internal Server Error',
+                data:[]
+            });
         }
         
     }
