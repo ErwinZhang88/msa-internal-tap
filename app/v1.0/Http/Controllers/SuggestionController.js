@@ -20,10 +20,9 @@
 		const USER_AUTH_CODE = auth.USER_AUTH_CODE;
 		let LOCATION_CODE = auth.LOCATION_CODE;
 		    LOCATION_CODE = LOCATION_CODE.split(',');
-            // LOCATION_CODE = '\''.join( '\',\'' + LOCATION_CODE ) + '\'';
-            // LOCATION_CODE = LOCATION_CODE.join(',');
             LOCATION_CODE = LOCATION_CODE.map(LOCATION => `'${LOCATION}'`).join(',');
         let whereCondition = ` AND USER_AUTH_CODE = '${USER_AUTH_CODE}' `;
+
         switch (auth.REFFERENCE_ROLE) {
             case 'NATIONAL':
 				whereCondition += "";
@@ -41,6 +40,7 @@
 				whereCondition += `AND SD.WERKS || SD.AFD_CODE || SD.BLOCK_CODE IN( ${LOCATION_CODE} )`;
 			break;
         }
+        console.log(whereCondition);
         try {
             let sql, binds, options, result;
             let arrayGetImageByTRCode = {};

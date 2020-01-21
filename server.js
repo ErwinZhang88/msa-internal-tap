@@ -6,8 +6,8 @@
 	process.env.ORA_SDTZ = 'UTC';
 	global._directory_base = __dirname;
 	global.config = {};
-	  config.app = require( './config/app.js' );
-	  config.database = require( './config/database.js' )
+		config.app = require( './config/app.js' );
+		config.database = require( './config/database.js' )[config.app.env];
 
 
 /*
