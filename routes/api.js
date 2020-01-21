@@ -48,6 +48,9 @@
         //get kg taksasi
         app.get('/api/v1.0/taksasi', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.TitikRestan.taksasi);
 
+        //get titik restan api
+        app.get('/api/v1.0/titik-restan', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.TitikRestan.titikRestan);
+
         //Untuk get data peta panen header dan detail
         app.get('/api/v1.0/peta-panen/header', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenHeader);
         app.get('/api/v1.0/peta-panen/detail', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenDetail);
