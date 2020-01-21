@@ -53,7 +53,7 @@
  | Cron
  |--------------------------------------------------------------------------
  */
-	new CronJob( '30 02 * * *', function () {
+	// new CronJob( '30 02 * * *', function () {
 		// var claims = {
 		// 	USERNAME: 'ferdinand',
 		// 	USER_AUTH_CODE: '0102',
@@ -61,6 +61,6 @@
 		// 	LOCATION_CODE: 'ALL'
 		// };
 		// let token = Security.generate_token( claims ); // Generate Token
-		console.log( 'running cron' );
-		Kernel.pushKafka();
-	}, null, true, 'Asia/Jakarta' );
+	// 	console.log( 'running cron' );
+	// 	Kernel.pushKafka();
+	// }, null, true, 'Asia/Jakarta' );
