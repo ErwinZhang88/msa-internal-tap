@@ -54,7 +54,7 @@
                 result.rows.forEach(function (rs) {
                     //format value yang decimal menjadi 2 angka dibelakang koma 
                     for(let key in rs) {
-                        rs[key] = formatNumberValue(rs[key]);
+                        rs[key] = formatValue(rs[key]);
                     }
                 });
                 return res.send({
@@ -78,12 +78,18 @@
         }
     }
     
-    function formatNumberValue(value) {
+    function formatValue(value) {
         //cek jika value number
         if(!isNaN(value)) {
             //cek jika value bernilai desimal
             if ((value % 1) != 0) {
                 value = Math.round(value * 100) / 100;
+            } else if (!value) {
+                value = 0;
+            }
+        } else {
+            if (!value) {
+                value = "";
             }
         }
         return value;
@@ -128,7 +134,7 @@
                 result.rows.forEach(function (rs) {
                     //format value yang decimal menjadi 2 angka dibelakang koma 
                     for(let key in rs) {
-                        rs[key] = formatNumberValue(rs[key]);
+                        rs[key] = formatValue(rs[key]);
                     }
                 });
                 return res.send({
