@@ -47,8 +47,6 @@
         } );
         werksQuerySearch = werksQuerySearch.map(werks => `'${werks}'`).join(',');
         afdQuerySearch = afdQuerySearch.map(afd => `'${afd}'`).join(',');
-        console.log(werksQuerySearch);
-        console.log(afdQuerySearch);
         try {
             let sql, binds, options, result;
             sql =  `SELECT 
@@ -73,6 +71,7 @@
                     restan.tgl_report = TRUNC (SYSDATE) 
                     AND restan.latitude != '0' 
                     AND restan.status_bcc = 'RESTAN'
+                    AND restan.TPH_RESTANT_DAY <= 15
                     AND restan.werks IN( ${werksQuerySearch} )
                     AND restan.afd_code IN( ${afdQuerySearch} )
                 GROUP BY 

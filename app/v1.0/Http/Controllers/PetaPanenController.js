@@ -50,12 +50,25 @@
                 // fetchArraySize: 100
             };
             result = await connection.execute( sql, binds, options );
-            res.send({
-                status: true,
-                message: 'Success!',
-                data: result.rows
-            });
-
+            if (result.rows) {
+                result.rows.forEach(function (rs) {
+                    //format value yang decimal menjadi 2 angka dibelakang koma 
+                    for(let key in rs) {
+                        rs[key] = formatNumberValue(rs[key]);
+                    }
+                });
+                return res.send({
+                    status: true,
+                    message: 'Success!',
+                    data: result.rows
+                });
+            } else {
+                return res.send({
+                    status: true,
+                    message: 'success',
+                    data: []
+                })
+            }
         } catch (error) {
             res.send({
                 status: false,
@@ -63,6 +76,17 @@
                 data: []
             });
         }
+    }
+    
+    function formatNumberValue(value) {
+        //cek jika value number
+        if(!isNaN(value)) {
+            //cek jika value bernilai desimal
+            if ((value % 1) != 0) {
+                value = Math.round(value * 100) / 100;
+            }
+        }
+        return value;
     }
     exports.petaPanenDetail = async (req, res) => {
         const auth = req.auth;
@@ -100,11 +124,25 @@
                 // fetchArraySize: 100
             };
             result = await connection.execute( sql, binds, options );
-            res.send({
-                status: true,
-                message: 'Success!',
-                data: result.rows
-            });
+            if (result.rows) {
+                result.rows.forEach(function (rs) {
+                    //format value yang decimal menjadi 2 angka dibelakang koma 
+                    for(let key in rs) {
+                        rs[key] = formatNumberValue(rs[key]);
+                    }
+                });
+                return res.send({
+                    status: true,
+                    message: 'Success!',
+                    data: result.rows
+                });
+            } else {
+                return res.send({
+                    status: true,
+                    message: 'success',
+                    data: []
+                })
+            }
         } catch (error) {
             res.send({
                 status: false,

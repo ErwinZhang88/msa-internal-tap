@@ -9,7 +9,8 @@
             ExportKafka : require( _directory_base + '/app/v1.0/Http/Controllers/ExportKafkaController.js' ),
             Suggestion: require(_directory_base + '/app/v1.0/Http/Controllers/SuggestionController.js'),
             TitikRestan: require(_directory_base + '/app/v1.0/Http/Controllers/TitikRestanController.js'),
-            PetaPanen: require(_directory_base + '/app/v1.0/Http/Controllers/PetaPanenController.js')
+            PetaPanen: require(_directory_base + '/app/v1.0/Http/Controllers/PetaPanenController.js'),
+            Point: require(_directory_base + '/app/v1.0/Http/Controllers/PointController.js')
         }
     }
     const Middleware = {
@@ -54,4 +55,11 @@
         //Untuk get data peta panen header dan detail
         app.get('/api/v1.0/peta-panen/header', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenHeader);
         app.get('/api/v1.0/peta-panen/detail', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenDetail);
+
+        //Untuk get point current user
+        app.get('/api/v1.0/point/me', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.Point.myPoint);
+
+        //Untuk get point other user
+        app.get('/api/v1.0/point/users', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.Point.userPoint);
+
     }
