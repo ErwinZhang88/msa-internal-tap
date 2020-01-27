@@ -45,7 +45,7 @@
             let sql, binds, options, result;
             let arrayGetImageByTRCode = {};
             connection = await OracleDB.getConnection( config.database );
-            sql = ( `
+            sql =  `
                 SELECT
                     SD.BLOCK_NAME || ' / ' || SH.\"Maturity Status\" || ' / ' || SH.\"Estate Name\" AS LOCATION_CODE,
                     SH.LAST_TGL_PANEN,
@@ -92,7 +92,7 @@
                     AND rank_no < 6
                     AND rownum < 6
                 ORDER BY rank_no
-            ` );
+            `;
             binds = {};
             options = {
                 outFormat: OracleDB.OUT_FORMAT_OBJECT

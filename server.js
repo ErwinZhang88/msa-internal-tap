@@ -40,7 +40,6 @@
 	} );
 	//Kernel
 	const Kernel = require( _directory_base + '/app/v1.0/Console/Kernel.js' );
-
 /*
  |--------------------------------------------------------------------------
  | Routing
