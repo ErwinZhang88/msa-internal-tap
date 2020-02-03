@@ -58,6 +58,7 @@
                         //ubah format tanggal
                         if (key == 'PER_TANGGAL' || key == 'TGL_PANEN') {
                             rs[key] = (dateformat(rs[key], 'yyyy-mm-dd' ));
+                            continue;
                         }
                         rs[key] = formatValue(rs[key]);
                     }
