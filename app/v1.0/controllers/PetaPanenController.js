@@ -7,6 +7,7 @@
  |
  */
     const oracledb = require('oracledb');
+    const dateformat = require('dateformat');
 
  /*
  |--------------------------------------------------------------------------
@@ -52,8 +53,12 @@
             result = await connection.execute( sql, binds, options );
             if (result.rows) {
                 result.rows.forEach(function (rs) {
-                    //format value yang decimal menjadi 2 angka dibelakang koma 
+                    //format value yang decimal menjadi 2 angka dibelakang koma
                     for(let key in rs) {
+                        //ubah format tanggal
+                        if (key == 'PER_TANGGAL' || key == 'TGL_PANEN') {
+                            rs[key] = (dateformat(rs[key], 'yyyy-mm-dd' ));
+                        }
                         rs[key] = formatValue(rs[key]);
                     }
                 });
