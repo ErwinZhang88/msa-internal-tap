@@ -9,8 +9,8 @@
 
     const OracleDB = require( 'oracledb' );
     // Primary Variable
-    const Kafka = require( _directory_base + '/app/v1.0/Http/Libraries/KafkaServer.js' );
-    const Helper = require( _directory_base + '/app/v1.0/Http/Libraries/Helper.js' )
+    const Kafka = require( _directory_base + '/app/utils/KafkaServer.js' );
+    const Helper = require( _directory_base + '/app/utils/Helper.js' )
 
     exports.pushKafka = async( req, res ) => {
         let connection;

@@ -125,6 +125,14 @@
                 for(let i = 0; i < responseResult.length; i++) {
                     responseFinal = responseFinal.concat(responseResult[i]);
                 }
+                console.log(responseFinal);
+                for(let i = 0; i < responseFinal.length; i++) {
+                    for(let key in responseFinal[i]) {
+                        if(!responseFinal[i][key].IMAGE_URL) {
+                            responseFinal[i][key].IMAGE_URL = config.app.url[config.app.env].microservice_images + "/files/images-profile/default.png";
+                        }
+                    }
+                }
                 return res.send({
                     status: true,
                     message: 'Success!',
@@ -139,7 +147,7 @@
         } catch (err) {
             return res.send({
                 status: false,
-                message: err.message,
+                message: "Internal server error",
                 data: []
             })
         }
@@ -148,7 +156,7 @@
     async function getImageURL(userAuthCodes, req) {
         try{
             // let imageProfileURL = config.app.url[config.app.env].microservice_images + "/api/v2.0/foto-profile";
-            let imageProfileURL = config.app.url[config.app.env].microservice_images + "/api/v2.0/internal/foto-profile/users";
+            let imageProfileURL = "http://localhost:4012/api/v2.0/internal/foto-profile/users";
             axios.defaults.headers.common['Authorization'] = req.headers.authorization;
             let result = await axios.post(imageProfileURL, userAuthCodes);
             if (result.data) {
@@ -161,7 +169,7 @@
     }
     async function getUserProfile(userAuthCodes, req) {
         try {
-            let contactServiceURL = config.app.url[config.app.env].microservice_auth + "/api/v2.0/internal/contacts";
+            let contactServiceURL = "http://localhost:4008/api/v2.0/internal/contacts";
             axios.defaults.headers.common['Authorization'] = req.headers.authorization;
             let result = await axios.post(contactServiceURL, userAuthCodes);
             return result.data.data;

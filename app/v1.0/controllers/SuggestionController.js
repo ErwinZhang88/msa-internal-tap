@@ -8,7 +8,7 @@
  */
     const OracleDB = require('oracledb');
     // Primary Variable
-    const Helper = require(_directory_base + '/app/v1.0/Http/Libraries/Helper.js');
+    const Helper = require(_directory_base + '/app/utils/Helper.js');
     const Client = require( 'node-rest-client' ).Client;
     const client = new Client();
     const dateFormat = require('dateformat');

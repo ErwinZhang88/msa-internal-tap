@@ -6,18 +6,15 @@
     //Controllers
     const Controllers = {
         v_1_0: {
-            ExportKafka : require( _directory_base + '/app/v1.0/Http/Controllers/ExportKafkaController.js' ),
-            Suggestion: require(_directory_base + '/app/v1.0/Http/Controllers/SuggestionController.js'),
-            TitikRestan: require(_directory_base + '/app/v1.0/Http/Controllers/TitikRestanController.js'),
-            PetaPanen: require(_directory_base + '/app/v1.0/Http/Controllers/PetaPanenController.js'),
-            Point: require(_directory_base + '/app/v1.0/Http/Controllers/PointController.js')
+            ExportKafka : require( _directory_base + '/app/v1.0/controllers/ExportKafkaController.js' ),
+            Suggestion: require(_directory_base + '/app/v1.0/controllers/SuggestionController.js'),
+            TitikRestan: require(_directory_base + '/app/v1.0/controllers/TitikRestanController.js'),
+            PetaPanen: require(_directory_base + '/app/v1.0/controllers/PetaPanenController.js'),
+            Point: require(_directory_base + '/app/v1.0/controllers/PointController.js')
         }
     }
-    const Middleware = {
-        v_1_0: {
-            VerifyToken: require(_directory_base + '/app/v1.0/Http/Middleware/VerifyToken.js')
-        }
-    }
+    const VerifyToken = require(_directory_base + '/app/utils/VerifyToken.js');
+        
     module.exports = ( app ) => {
 
         /*
@@ -44,22 +41,22 @@
         app.get( '/api/v1.0/push-kafka', Controllers.v_1_0.ExportKafka.pushKafka );
         
         //get data suggestion 
-        app.get('/api/v1.0/suggestion', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.Suggestion.suggestion);
+        app.get('/api/v1.0/suggestion', VerifyToken, Controllers.v_1_0.Suggestion.suggestion);
 
         //get kg taksasi
-        app.get('/api/v1.0/taksasi', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.TitikRestan.taksasi);
+        app.get('/api/v1.0/taksasi', VerifyToken, Controllers.v_1_0.TitikRestan.taksasi);
 
         //get titik restan api
-        app.get('/api/v1.0/titik-restan', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.TitikRestan.titikRestan);
+        app.get('/api/v1.0/titik-restan', VerifyToken, Controllers.v_1_0.TitikRestan.titikRestan);
 
         //Untuk get data peta panen header dan detail
-        app.get('/api/v1.0/peta-panen/header', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenHeader);
-        app.get('/api/v1.0/peta-panen/detail', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenDetail);
+        app.get('/api/v1.0/peta-panen/header', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenHeader);
+        app.get('/api/v1.0/peta-panen/detail', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenDetail);
 
         //Untuk get point current user
-        app.get('/api/v1.0/point/me', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.Point.myPoint);
+        app.get('/api/v1.0/point/me', VerifyToken, Controllers.v_1_0.Point.myPoint);
 
         //Untuk get point other user
-        app.get('/api/v1.0/point/users', Middleware.v_1_0.VerifyToken, Controllers.v_1_0.Point.userPoint);
+        app.get('/api/v1.0/point/users', VerifyToken, Controllers.v_1_0.Point.userPoint);
 
     }
