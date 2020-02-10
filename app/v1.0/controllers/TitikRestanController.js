@@ -68,7 +68,7 @@
                     tap_dw.tr_hv_restant_detail@proddw_link restan 
                     LEFT JOIN tap_dw.tm_est@proddw_link est ON restan.werks = est.werks 
                 WHERE 
-                    restan.tgl_report = TRUNC (SYSDATE) 
+                    restan.tgl_report = TRUNC (SYSDATE-1) 
                     AND restan.latitude != '0' 
                     AND restan.status_bcc = 'RESTAN'
                     AND restan.TPH_RESTANT_DAY <= 15
@@ -133,7 +133,7 @@
             sql = `
                 SELECT restan.werks, restan.afd_code, SUM (kg_taksasi) AS kg_taksasi
                 FROM tap_dw.tr_hv_restant_detail@proddw_link restan
-                WHERE restan.tgl_report = TRUNC (SYSDATE) AND restan.latitude != '0' AND restan.status_bcc = 'RESTAN'
+                WHERE restan.tgl_report = TRUNC (SYSDATE-1) AND restan.latitude != '0' AND restan.status_bcc = 'RESTAN'
                 GROUP BY restan.werks, restan.afd_code
             `;
             connection = await oracledb.getConnection( config.database );
