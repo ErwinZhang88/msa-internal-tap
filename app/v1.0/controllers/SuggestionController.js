@@ -129,8 +129,7 @@
                     "Authorization": req.headers.authorization
                 }
             }
-            // let serviceImage = config.app.url[config.app.env].microservice_images;
-            let serviceImage = 'http://localhost:4012';
+            let serviceImage = config.app.url[config.app.env].microservice_images;
             let request = client.post( serviceImage + '/api/v2.0/inspection/suggestion', args, function ( data, response ) {
                 if (data) {
                     result.rows.forEach(function (rs) {
