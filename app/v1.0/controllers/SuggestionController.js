@@ -40,7 +40,6 @@
 				whereCondition += `AND SD.WERKS || SD.AFD_CODE || SD.BLOCK_CODE IN( ${LOCATION_CODE} )`;
 			break;
         }
-        console.log(whereCondition);
         try {
             let sql, binds, options, result;
             let arrayGetImageByTRCode = {};
@@ -101,6 +100,7 @@
             };
             result = await connection.execute( sql, binds, options );
             let index = 0;
+            console.log(result.rows);
             await Promise.all( result.rows.map(async function (rs) {
                 ++index;
                 let werksAfdBlockCode = rs.WERKS + rs.AFD_CODE + rs.BLOCK_CODE;
@@ -129,7 +129,8 @@
                     "Authorization": req.headers.authorization
                 }
             }
-            let serviceImage = config.app.url[config.app.env].microservice_images;
+            // let serviceImage = config.app.url[config.app.env].microservice_images;
+            let serviceImage = 'http://localhost:4012';
             let request = client.post( serviceImage + '/api/v2.0/inspection/suggestion', args, function ( data, response ) {
                 if (data) {
                     result.rows.forEach(function (rs) {
@@ -249,6 +250,7 @@
                 });
             } );
         } catch (error) {
+            console.log(error);
             res.send({
                 status: false,
                 message: 'Internal Server Error',
