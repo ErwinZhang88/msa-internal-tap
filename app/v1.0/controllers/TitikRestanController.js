@@ -49,47 +49,24 @@
         afdQuerySearch = afdQuerySearch.map(afd => `'${afd}'`).join(',');
         try {
             let sql, binds, options, result;
-            sql =  `SELECT 
-                    restan.oph AS OPH, 
-                    restan.bcc AS BCC,
-                    restan.tph_restant_day,
-                    restan.latitude, 
-                    restan.longitude, 
-                    SUM (jml_jjg) AS JML_JANJANG, 
-                    SUM (jml_brondolan) AS JML_BRONDOLAN, 
-                    SUM (kg_taksasi) AS KG_TAKSASI, 
-                    restan.tgl_report, 
-                    restan.werks, 
-                    est.est_name, 
-                    restan.afd_code, 
-                    restan.sub_block_name AS BLOCK_NAME,
-                    restan.sub_block_code AS BLOCK_CODE
-                FROM 
-                    tap_dw.tr_hv_restant_detail@proddw_link restan 
-                    LEFT JOIN tap_dw.tm_est@proddw_link est ON restan.werks = est.werks 
-                WHERE 
-                    restan.tgl_report = TRUNC (SYSDATE-1) 
-                    AND restan.latitude != '0' 
-                    AND restan.status_bcc = 'RESTAN'
-                    AND restan.TPH_RESTANT_DAY <= 15
-                    AND restan.werks IN( ${werksQuerySearch} )
-                    AND restan.afd_code IN( ${afdQuerySearch} )
-                GROUP BY 
-                    restan.werks, 
-                    est.est_name, 
-                    restan.afd_code, 
-                    restan.sub_block_code, 
-                    restan.sub_block_name, 
-                    restan.tph_restant_day, 
-                    restan.oph, 
-                    restan.latitude, 
-                    restan.longitude, 
-                    restan.bcc, 
-                    restan.tgl_report
-                ORDER BY
-                    restan.werks ASC,
-                    restan.afd_code ASC,
-                    restan.sub_block_name ASC
+            sql =  `SELECT restan.oph AS oph,
+                        restan.bcc AS bcc,
+                        restan.tphrd AS tph_restant_day,
+                        restan.lat AS latitude,
+                        restan.lon AS longitude,
+                        restan.jmljj AS jml_janjang,
+                        restan.jmlbd AS jml_brondolan,
+                        restan.kgtks AS kg_taksasi,
+                        restan.tglrp AS tgl_report,
+                        restan.werks AS werks,
+                        restan.est_name AS est_name,
+                        restan.afd_code AS afd_code,
+                        restan.block_name AS block_name,
+                        restan.block_code AS block_code
+                    FROM mobile_inspection.tr_titik_restan restan
+                    WHERE restan.werks IN( ${werksQuerySearch} )
+                        AND restan.afd_code IN( ${afdQuerySearch} )
+                    ORDER BY restan.werks ASC, restan.afd_code ASC, restan.block_name ASC
             `;
             connection = await oracledb.getConnection( config.database );
             binds = {};
@@ -131,10 +108,9 @@
         try {
             let sql, binds, options, result;
             sql = `
-                SELECT restan.werks, restan.afd_code, SUM (kg_taksasi) AS kg_taksasi
-                FROM tap_dw.tr_hv_restant_detail@proddw_link restan
-                WHERE restan.tgl_report = TRUNC (SYSDATE-1) AND restan.latitude != '0' AND restan.status_bcc = 'RESTAN'
-                GROUP BY restan.werks, restan.afd_code
+                SELECT werks, afd_code, SUM (kgtks) kg_taksasi
+                FROM mobile_inspection.tr_titik_restan
+                GROUP BY werks, afd_code
             `;
             connection = await oracledb.getConnection( config.database );
             binds = {};
