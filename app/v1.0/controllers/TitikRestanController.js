@@ -47,10 +47,13 @@
         } );
         werksQuerySearch = werksQuerySearch.map(werks => `'${werks}'`).join(',');
         afdQuerySearch = afdQuerySearch.map(afd => `'${afd}'`).join(',');
+        console.log(werksQuerySearch);
+        console.log(afdQuerySearch);
         try {
             let sql, binds, options, result;
             sql =  `SELECT restan.oph AS oph,
                         restan.bcc AS bcc,
+                        restan.unik_id AS unik_id,
                         restan.tphrd AS tph_restant_day,
                         restan.lat AS latitude,
                         restan.lon AS longitude,
