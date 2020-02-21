@@ -37,6 +37,10 @@
 		console.log( "\tStatus \t\t: OK" );
 		console.log( "\tService \t: " + config.app.name + " (" + config.app.env + ")" );
 		console.log( "\tPort \t\t: " + config.app.port[config.app.env] );
+
+		console.log("Database");
+		console.log( "\tDB Server \t: " + config.database.connectString + " (" + config.app.env + ")" );
+
 	} );
 	//Kernel
 	const Kernel = require( _directory_base + '/app/v1.0/Console/Kernel.js' );
