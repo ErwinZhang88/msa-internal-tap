@@ -11,7 +11,7 @@
 		|--------------------------------------------------------------------------
 		*/
 			name: 'Microservice Internal TAP',
-			env: 'qa', // prod, qa, dev,
+			env: 'prod', // prod, qa, dev,
 			port: {
 				dev: process.env.PORT || 4015,
 				qa: process.env.PORT || 5015,
