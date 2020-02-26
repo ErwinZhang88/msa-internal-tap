@@ -17,6 +17,13 @@
 
     exports.petaPanenHeader = async (req, res) => {
         const auth = req.auth;
+        if (auth.USER_ROLE != 'ASISTEN_LAPANGAN') {
+            return res.send({
+                status: true,
+                message: 'bukan asisten lapangan',
+                data: []
+            });
+        }
         try {
             let sql, binds, options, result;
             connection = await oracledb.getConnection(config.database);
@@ -102,6 +109,13 @@
     }
     exports.petaPanenDetail = async (req, res) => {
         const auth = req.auth;
+        if (auth.USER_ROLE != 'ASISTEN_LAPANGAN') {
+            return res.send({
+                status: true,
+                message: 'bukan asisten lapangan',
+                data: []
+            })
+        }
         try {
             let sql, binds, options, result;
             connection = await oracledb.getConnection(config.database);
