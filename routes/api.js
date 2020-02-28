@@ -10,7 +10,8 @@
             Suggestion: require(_directory_base + '/app/v1.0/controllers/SuggestionController.js'),
             TitikRestan: require(_directory_base + '/app/v1.0/controllers/TitikRestanController.js'),
             PetaPanen: require(_directory_base + '/app/v1.0/controllers/PetaPanenController.js'),
-            Point: require(_directory_base + '/app/v1.0/controllers/PointController.js')
+            Point: require(_directory_base + '/app/v1.0/controllers/PointController.js'),
+            Master: require(_directory_base + '/app/v1.0/controllers/master/MasterController.js')
         }
     }
     const VerifyToken = require(_directory_base + '/app/utils/VerifyToken.js');
@@ -58,5 +59,9 @@
 
         //Untuk get point other user
         app.get('/api/v1.0/point/users', VerifyToken, Controllers.v_1_0.Point.userPoint);
+        
+        //get data master block dan afdeling
+        app.get('/api/v1.0/master/block', VerifyToken, Controllers.v_1_0.Master.block);
+        app.get('/api/v1.0/master/afdeling', VerifyToken, Controllers.v_1_0.Master.afdeling);
 
     }
