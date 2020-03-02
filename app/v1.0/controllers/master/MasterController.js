@@ -57,6 +57,14 @@
                 message: err.message,
                 data: []
             } );
+        } finally {
+            if (connection) {
+                try {
+                    await connection.close();
+                } catch (err) {
+                    console.error(err);
+                }
+            }
         }
     }
 
@@ -96,7 +104,15 @@
                 message: err.message,
                 data: []
             } );
-        }
+        } finally {
+            if (connection) {
+                try {
+                    await connection.close();
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+          }
     }
 
     
