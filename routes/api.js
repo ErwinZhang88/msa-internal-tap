@@ -54,13 +54,13 @@
         app.get('/api/v1.0/peta-panen/header', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenHeader);
         app.get('/api/v1.0/peta-panen/detail', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenDetail);
 
-        //Untuk get point current user
-        app.get('/api/v1.0/point/me', VerifyToken, Controllers.v_1_0.Point.myPoint);
+        //Untuk get point current user (tidak jadi dipakai, pindah ke msa-point)
+        // app.get('/api/v1.0/point/me', VerifyToken, Controllers.v_1_0.Point.myPoint);
 
-        //Untuk get point other user
-        app.get('/api/v1.0/point/users', VerifyToken, Controllers.v_1_0.Point.userPoint);
+        //Untuk get point other user (tidak jadi dipakai, pindah ke msa-point)
+        // app.get('/api/v1.0/point/users', VerifyToken, Controllers.v_1_0.Point.userPoint);
         
-        //get data master block dan afdeling
+        //get data master block dan afdeling 2 API ini dipakai oleh project IDMS
         app.get('/api/v1.0/master/block', VerifyToken, Controllers.v_1_0.Master.block);
         app.get('/api/v1.0/master/afdeling', VerifyToken, Controllers.v_1_0.Master.afdeling);
 
