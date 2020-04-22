@@ -38,7 +38,7 @@
         |--------------------------------------------------------------------------
         */
        //push data titik restan ke kafka
-        app.get( '/api/v1.0/push-kafka', Controllers.v_1_0.ExportKafka.pushKafka );
+        // app.get( '/api/v1.0/push-kafka', Controllers.v_1_0.ExportKafka.pushKafka );
         
         //get data suggestion 
         app.get('/api/v1.0/suggestion', VerifyToken, Controllers.v_1_0.Suggestion.suggestion);

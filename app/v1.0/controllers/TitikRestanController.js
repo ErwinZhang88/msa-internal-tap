@@ -9,7 +9,7 @@
  	
     const oracledb = require('oracledb');
     const dateFormat = require('dateformat');
- 
+
      // Middleware
     //  const Date = require( _directory_base + '/app/v1.0/Http/Middleware/Date.js' );
 
@@ -71,7 +71,7 @@
                         AND restan.afd_code IN( ${afdQuerySearch} )
                     ORDER BY restan.werks ASC, restan.afd_code ASC, restan.block_name ASC
             `;
-            connection = await oracledb.getConnection( config.database );
+            connection = await oracledb.getConnection( miDBConfig );
             binds = {};
             options = {
                 outFormat: oracledb.OUT_FORMAT_OBJECT
@@ -123,7 +123,7 @@
                 FROM mobile_inspection.tr_titik_restan
                 GROUP BY werks, afd_code
             `;
-            connection = await oracledb.getConnection( config.database );
+            connection = await oracledb.getConnection( miDBConfig );
             binds = {};
             options = {
                 outFormat: oracledb.OUT_FORMAT_OBJECT

@@ -7,7 +7,7 @@
  |
  */
 
-    const OracleDB = require( 'oracledb' );
+    /*const OracleDB = require( 'oracledb' );
     // Primary Variable
     const Kafka = require( _directory_base + '/app/utils/KafkaServer.js' );
     const Helper = require( _directory_base + '/app/utils/Helper.js' )
@@ -124,5 +124,5 @@
             }
         }
     }
-
+*/
     

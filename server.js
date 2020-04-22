@@ -8,7 +8,8 @@
 	global.config = {};
 		config.app = require( './config/app.js' );
 		config.database = require( './config/database.js' )[config.app.env];
-
+	global.miDBConfig = config.database.mobileInspection;
+	global.patroliDBConfig = config.database.patroliApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@
 		console.log( "\tPort \t\t: " + config.app.port[config.app.env] );
 
 		console.log("Database");
-		console.log( "\tDB Server \t: " + config.database.connectString + " (" + config.app.env + ")" );
+		console.log( "\tDB Server \t: " + config.database.mobileInspection.connectString + " (" + config.app.env + ")" );
 	} );
 	//Kernel
 	const Kernel = require( _directory_base + '/app/v1.0/Console/Kernel.js' );
@@ -52,17 +53,9 @@
 
 /*
  |--------------------------------------------------------------------------
- | Cron
+ | Kafka
  |--------------------------------------------------------------------------
  */
-	// new CronJob( '30 02 * * *', function () {
-		// var claims = {
-		// 	USERNAME: 'ferdinand',
-		// 	USER_AUTH_CODE: '0102',
-		// 	IMEI: '123txxx',
-		// 	LOCATION_CODE: 'ALL'
-		// };
-		// let token = Security.generate_token( claims ); // Generate Token
-	// 	console.log( 'running cron' );
-	// 	Kernel.pushKafka();
-	// }, null, true, 'Asia/Jakarta' );
+	const Kafka = require(_directory_base + '/app/utils/Kafka.js');
+	Kafka.consumer()
+	
