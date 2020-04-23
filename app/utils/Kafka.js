@@ -89,23 +89,79 @@
 				// how to recover from OutOfRangeOffset error (where save offset is past server retention)
 				// accepts same value as fromOffset
 				outOfRangeOffset: 'earliest'
-			  };
-			  var consumerGroup = new ConsumerGroup(options, ['PAT_MSA_PATROLI_TR_TRACKING']);
-  
-			  consumerGroup.on('message', function (message) {
-				console.log(message);
-				//TODO: You can write your code or call messageProcesser function
-			  });
-			
-			  consumerGroup.on('error', function onError(error) {
+			};
+			let consumerGroup = new ConsumerGroup(options, ['PAT_MSA_PATROLI_TR_TRACKING']);
+
+			consumerGroup.on('message', async (message) => {
+				try {
+					if (message) {
+						this.save(message);
+					}
+				} catch(err) {
+					console.log(err)
+				}
+			});
+		
+			consumerGroup.on('error', function onError(error) {
 				console.error(error);
-			  });
+			});
 		}
-		async save(message, offsetFetch) {
-			try {
-				this.updateOffset(message.topic, offsetFetch)
-			} catch (err) {
-				console.log(err);
+		async save(message) {
+			if (message.value) {
+				let sql, binds, options, connection;
+				
+				try {
+					let data = JSON.parse(message.value)
+					let trackCode = data.TRCD
+					let baCode = data.BACD
+					let jalur = data.JLR
+					let checkpoint = data.CHKPNT
+					let duration = data.DRTN
+					let jarak = data.JRK
+					let jmlTitikApi = data.JMLTKAP
+					let dateTrack = new Date(data.DTTR)
+					let latTrack = data.LAT
+					let longTrack = data.LOT
+					let syncTime = new Date(data.SYTM)
+					let insertUser = data.INSU
+					let insertTime = new Date(data.INSTM)
+
+					sql = `INSERT INTO PATROLI_API.TR_TRACKING VALUES(:TRACK_CODE, :BA_CODE, :JALUR, :CHECKPOINT, :DURATION, :JARAK, :JUMLAH_TITIK_API, :DATE_TRACK, :LAT_TRACK, :LONG_TRACK, :SYNC_TIME, :INSERT_USER, :INSERT_TIME)`
+
+					connection = await oracledb.getConnection( patroliDBConfig );
+					binds = {
+						TRACK_CODE: trackCode,
+						BA_CODE: baCode,
+						JALUR: jalur,
+						CHECKPOINT: checkpoint,
+						DURATION: duration,
+						JARAK: jarak,
+						JUMLAH_TITIK_API: jmlTitikApi,
+						DATE_TRACK: dateTrack,
+						LAT_TRACK: latTrack,
+						LONG_TRACK: longTrack,
+						SYNC_TIME: syncTime,
+						INSERT_USER: insertUser,
+						INSERT_TIME: insertTime
+					};
+					options = {
+						autoCommit: true
+					};
+					// await connection.execute( sql, ['ihsan husaeri'], options);
+					await connection.execute( sql, binds, options);
+					// await connection.execute( sql, [trackCode, baCode, jalur, checkpoint, duration, jarak, jmlTitikApi, dateTrack, latTrack, longTrack, syncTime, insertUser, insertTime]);
+					console.log("sukses insert data")
+				} catch (err) {
+					console.log(err);
+				} finally {
+					if (connection) {
+						try {
+							await connection.close();
+						} catch (err) {
+							console.error(err);
+						}
+					}
+				}
 			}
 		}
 
