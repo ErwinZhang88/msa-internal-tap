@@ -116,9 +116,9 @@
 					let baCode = data.BACD
 					let jalur = data.JLR
 					let checkpoint = data.CHKPNT
-					let duration = data.DRTN
-					let jarak = data.JRK
-					let jmlTitikApi = data.JMLTKAP
+					let duration = parseInt(data.DRTN)
+					let jarak = parseFloat(data.JRK).toFixed(2)
+					let jmlTitikApi = parseInt(data.JMLTKAP)
 					let dateTrack = new Date(data.DTTR)
 					let latTrack = data.LAT
 					let longTrack = data.LOT
@@ -147,9 +147,7 @@
 					options = {
 						autoCommit: true
 					};
-					// await connection.execute( sql, ['ihsan husaeri'], options);
 					await connection.execute( sql, binds, options);
-					// await connection.execute( sql, [trackCode, baCode, jalur, checkpoint, duration, jarak, jmlTitikApi, dateTrack, latTrack, longTrack, syncTime, insertUser, insertTime]);
 					console.log("sukses insert data")
 				} catch (err) {
 					console.log(err);
@@ -162,43 +160,6 @@
 						}
 					}
 				}
-			}
-		}
-
-		//untuk mendapatkan semua offset dari setiap topic
-		async getListOffset() {
-			try {
-				
-			} catch (err) {
-				
-			}
-		}
-		
-		//update offset dari satu topic
-		updateOffset(topic, offsetFetch) {
-			try {
-				offsetFetch.fetch([
-					{ topic: topic, partition: 0, time: -1, maxNum: 1 }
-				], async function (err, data) {
-					let lastOffsetNumber = data[topic]['0'][0];
-					let sql, binds, options, result;
-					console.log(topic);
-					console.log(lastOffsetNumber);
-					sql = `UPDATE PATROLI.T_KAFKA_PAYLOADS SET OFFSET= :offset WHERE TOPIC= :topic`
-					try {
-						let connection = await oracledb.getConnection( patroliDBConfig );
-						binds = {};
-						options = {
-							autoCommit: true
-						};
-						await connection.execute( sql, {topic: topic, offset: lastOffsetNumber}, options);
-						console.log("sukses update offset")
-					} catch (err) {
-						console.log(err)
-					}
-				});
-			} catch (err) {
-				console.log(err);
 			}
 		}
 	}
