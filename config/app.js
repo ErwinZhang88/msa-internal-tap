@@ -1,5 +1,11 @@
 /*
 |--------------------------------------------------------------------------
+| Configuration (Node_modules, Model, etc)
+|--------------------------------------------------------------------------
+*/
+	require('dotenv').config()
+/*
+|--------------------------------------------------------------------------
 | Module Exports
 |--------------------------------------------------------------------------
 */
@@ -23,9 +29,7 @@
 		| Token
 		|--------------------------------------------------------------------------
 		*/
-			secret_key: 'T4pagri123#',
 			token_expiration: 7, // Days
-			token_algorithm: 'HS256',
 		
 		/*
 		|--------------------------------------------------------------------------
@@ -34,13 +38,13 @@
 		*/
 			kafka: {
 				dev: {
-					server_host: 'kafkadev.tap-agri.com:9092'
+					server_host: process.env.KAFKADEV_HOST
 				},
 				qa: {
-					server_host: 'kafkaqa.tap-agri.com:9092'
+					server_host: process.env.KAFKAQA_HOST
 				},
 				prod: {
-					server_host: 'kafka.tap-agri.com:9092'
+					server_host: process.env.KAFKA_HOST
 				}
 			},
 

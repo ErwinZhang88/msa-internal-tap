@@ -90,12 +90,16 @@
 				// accepts same value as fromOffset
 				outOfRangeOffset: 'earliest'
 			};
-			let consumerGroup = new ConsumerGroup(options, ['PAT_MSA_PATROLI_TR_TRACKING']);
+			let consumerGroup = new ConsumerGroup(options, ['PAT_MSA_PATROLI_TR_TRACKING', 'PAT_MSA_PATROLI_TM_USER']);
 
 			consumerGroup.on('message', async (message) => {
 				try {
 					if (message) {
-						this.save(message);
+						if (message.topic == 'PAT_MSA_PATROLI_TR_TRACKING') {
+							this.saveTracking(message);
+						} else if (message.topic == 'PAT_MSA_PATROLI_TM_USER') {
+							this.saveUser(message);
+						}
 					}
 				} catch(err) {
 					console.log(err)
@@ -106,7 +110,7 @@
 				console.error(error);
 			});
 		}
-		async save(message) {
+		async saveTracking(message) {
 			if (message.value) {
 				let sql, binds, options, connection;
 				
@@ -151,6 +155,40 @@
 					console.log("sukses insert data")
 				} catch (err) {
 					console.log(err);
+				} finally {
+					if (connection) {
+						try {
+							await connection.close();
+						} catch (err) {
+							console.error(err);
+						}
+					}
+				}
+			}
+		}
+		async saveUser(message) {
+			if (message.value) {
+				let sql, binds, options, connection;
+				
+				try {
+					let data = JSON.parse(message.value)
+					let email = data.EML;
+					let fullname = data.FN;
+
+					sql = `INSERT INTO PATROLI_API.TM_USER VALUES(:EMPLOYEE_EMAIL, :EMPLOYEE_FULLNAME)`
+
+					connection = await oracledb.getConnection( patroliDBConfig );
+
+					binds = {
+						EMPLOYEE_EMAIL: email,
+						EMPLOYEE_FULLNAME: fullname,
+					}
+					options = {
+						autoCommit: true
+					};
+					await connection.execute( sql, binds, options);
+				} catch (err) {
+					console.log(err)
 				} finally {
 					if (connection) {
 						try {
