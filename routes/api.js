@@ -11,6 +11,7 @@
             TitikRestan: require(_directory_base + '/app/v1.0/controllers/TitikRestanController.js'),
             PetaPanen: require(_directory_base + '/app/v1.0/controllers/PetaPanenController.js'),
             Point: require(_directory_base + '/app/v1.0/controllers/PointController.js'),
+			MasterData: require(_directory_base + '/app/v1.0/controllers/MasterDataController.js'),
         }
     }
     const VerifyToken = require(_directory_base + '/app/utils/VerifyToken.js');
@@ -53,7 +54,10 @@
         app.get('/api/v1.0/peta-panen/header', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenHeader);
         app.get('/api/v1.0/peta-panen/detail', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenDetail);
 
-        //Untuk get point current user (tidak jadi dipakai, pindah ke msa-point)
+        //Untuk get HRIS search 
+         app.get('/api/v1.0/user-search', VerifyToken, Controllers.v_1_0.MasterData.hris_search);
+
+		//Untuk get point current user (tidak jadi dipakai, pindah ke msa-point)
         // app.get('/api/v1.0/point/me', VerifyToken, Controllers.v_1_0.Point.myPoint);
 
         //Untuk get point other user (tidak jadi dipakai, pindah ke msa-point)
