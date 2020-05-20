@@ -30,7 +30,7 @@
 		}
         try {
             let sql, binds, options, result, connection;
-            connection = await oracledb.getConnection( config.database );
+            connection = await oracledb.getConnection( miDBConfig );
             sql = ` SELECT *
 					  FROM tap_dw.tm_employee_hris@dwh_link
 					 WHERE (UPPER (employee_nik) LIKE '%' || UPPER ('` + req.query.q +`') || '%' OR UPPER (employee_fullname) LIKE '%' || UPPER ('` + req.query.q + `') || '%') AND (employee_resigndate IS NULL OR employee_resigndate >= SYSDATE)`;

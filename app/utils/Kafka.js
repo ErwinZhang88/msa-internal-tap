@@ -24,52 +24,6 @@
 |
 */
 	class Kafka {
-		/*async consumer () {
-			const Consumer = kafka.Consumer;
-			const Offset = kafka.Offset;
-			const Client = kafka.KafkaClient;
-			const client = new Client({ kafkaHost: config.app.kafka[config.app.env].server_host });
-			
-			let offsets = await this.getListOffset();
-			const topics = [
-				{ topic: 'PAT_MSA_PATROLI_TR_TRACKING', partition: 0, offset: 0/*offsets['PAT_MSA_PATROLI_TR_TRACKING'] }
-			];
-			const options = {
-				autoCommit: false,
-				fetchMaxWaitMs: 1000,
-				fetchMaxBytes: 1024 * 1024,
-				fromOffset: true,
-				requestTimeout: 5000
-			};
-
-			const consumer = new Consumer(client, topics, options);
-			let offset = new Offset(client);
-			consumer.on( 'message', async ( message ) => {
-				if (message) {
-					if (message.topic && message.value) {
-						try {
-							this.save(message, offset);
-						} catch (err) {
-							console.log(err);
-						}
-					}
-				}
-			})
-			consumer.on( 'error', function( err ) {
-				console.log( 'error', err );
-			});
-			consumer.on('offsetOutOfRange', function (topic) {
-				topic.maxNum = 2;
-				offset.fetch([topic], function (err, offsets) {
-					if (err) {
-						return console.error(err);
-					}
-					var min = Math.min.apply(null, offsets[topic.topic][topic.partition]);
-					consumer.setOffset(topic.topic, topic.partition, min);
-				});
-			});
-			
-		}*/
 		async consumer() {
 			const ConsumerGroup = kafka.ConsumerGroup;
 			var options = {
