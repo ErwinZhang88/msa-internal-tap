@@ -6,6 +6,7 @@
 	// Node Modules
 	const NJWT = require( 'njwt' );
 	const JWTDecode = require( 'jwt-decode' );
+	require('dotenv').config()
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@
 			const bearer = bearer_header.split( ' ' );
 			const bearer_token = bearer[1];
 			req.token = bearer_token;
-			NJWT.verify( bearer_token, config.app.secret_key, config.app.token_algorithm, ( err, authData ) => {
+			NJWT.verify( bearer_token, process.env.SECRET_KEY, process.env.TOKEN_ALGORITHM, ( err, authData ) => {
 				if ( err ) {
 					res.send({
 						status: false,

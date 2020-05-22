@@ -10,7 +10,8 @@
             Suggestion: require(_directory_base + '/app/v1.0/controllers/SuggestionController.js'),
             TitikRestan: require(_directory_base + '/app/v1.0/controllers/TitikRestanController.js'),
             PetaPanen: require(_directory_base + '/app/v1.0/controllers/PetaPanenController.js'),
-            Point: require(_directory_base + '/app/v1.0/controllers/PointController.js')
+            Point: require(_directory_base + '/app/v1.0/controllers/PointController.js'),
+			MasterData: require(_directory_base + '/app/v1.0/controllers/MasterDataController.js'),
         }
     }
     const VerifyToken = require(_directory_base + '/app/utils/VerifyToken.js');
@@ -38,7 +39,7 @@
         |--------------------------------------------------------------------------
         */
        //push data titik restan ke kafka
-        app.get( '/api/v1.0/push-kafka', Controllers.v_1_0.ExportKafka.pushKafka );
+        // app.get( '/api/v1.0/push-kafka', Controllers.v_1_0.ExportKafka.pushKafka );
         
         //get data suggestion 
         app.get('/api/v1.0/suggestion', VerifyToken, Controllers.v_1_0.Suggestion.suggestion);
@@ -53,10 +54,12 @@
         app.get('/api/v1.0/peta-panen/header', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenHeader);
         app.get('/api/v1.0/peta-panen/detail', VerifyToken, Controllers.v_1_0.PetaPanen.petaPanenDetail);
 
-        //Untuk get point current user
-        app.get('/api/v1.0/point/me', VerifyToken, Controllers.v_1_0.Point.myPoint);
+        //Untuk get HRIS search 
+         app.get('/api/v1.0/user-search', VerifyToken, Controllers.v_1_0.MasterData.hris_search);
 
-        //Untuk get point other user
-        app.get('/api/v1.0/point/users', VerifyToken, Controllers.v_1_0.Point.userPoint);
+		//Untuk get point current user (tidak jadi dipakai, pindah ke msa-point)
+        // app.get('/api/v1.0/point/me', VerifyToken, Controllers.v_1_0.Point.myPoint);
 
+        //Untuk get point other user (tidak jadi dipakai, pindah ke msa-point)
+        // app.get('/api/v1.0/point/users', VerifyToken, Controllers.v_1_0.Point.userPoint);
     }

@@ -6,7 +6,7 @@
  | Untuk menghandle models, libraries, helper, node modules, dan lain-lain
  |
  */
-    const OracleDB = require( 'oracledb' );
+   /* const OracleDB = require( 'oracledb' );
     // Primary Variable
     const Kafka = require( _directory_base + '/app/utils/KafkaServer.js' );
     const Helper = require( _directory_base + '/app/utils/Helper.js' )
@@ -111,4 +111,4 @@
  |--------------------------------------------------------------------------
  |*/
 
- module.exports = new Kernel();
+//  module.exports = new Kernel();

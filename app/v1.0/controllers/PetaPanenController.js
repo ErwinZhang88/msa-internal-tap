@@ -8,7 +8,6 @@
  */
     const oracledb = require('oracledb');
     const dateformat = require('dateformat');
-
  /*
  |--------------------------------------------------------------------------
  | Module Exports
@@ -26,7 +25,7 @@
         }
         try {
             let sql, binds, options, result;
-            connection = await oracledb.getConnection(config.database);
+            connection = await oracledb.getConnection(miDBConfig);
             let LOCATION_CODE = auth.LOCATION_CODE;
 		    LOCATION_CODE = LOCATION_CODE.split(',');
             LOCATION_CODE = LOCATION_CODE.map(LOCATION => `'${LOCATION}'`).join(',');
@@ -88,6 +87,14 @@
                 message: error.message,
                 data: []
             });
+        } finally {
+            if (connection) {
+                try {
+                    await connection.close();
+                } catch (err) {
+                    console.error(err);
+                }
+            }
         }
     }
     
@@ -118,7 +125,7 @@
         }
         try {
             let sql, binds, options, result;
-            connection = await oracledb.getConnection(config.database);
+            connection = await oracledb.getConnection(miDBConfig);
             let LOCATION_CODE = auth.LOCATION_CODE;
 		    LOCATION_CODE = LOCATION_CODE.split(',');
             LOCATION_CODE = LOCATION_CODE.map(LOCATION => `'${LOCATION}'`).join(',');
@@ -170,10 +177,19 @@
                 })
             }
         } catch (error) {
+            console.log(error)
             res.send({
                 status: false,
                 message: error.message,
                 data: []
             });
+        } finally {
+            if (connection) {
+                try {
+                    await connection.close();
+                } catch (err) {
+                    console.error(err);
+                }
+            }
         }
     }

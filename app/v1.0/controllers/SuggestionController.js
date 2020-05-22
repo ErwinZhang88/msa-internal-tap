@@ -43,7 +43,7 @@
         try {
             let sql, binds, options, result;
             let arrayGetImageByTRCode = {};
-            connection = await OracleDB.getConnection( config.database );
+            connection = await OracleDB.getConnection( miDBConfig );
             sql =  `
                 SELECT
                     SD.BLOCK_NAME || ' / ' || SH.\"Maturity Status\" || ' / ' || SH.\"Estate Name\" AS LOCATION_CODE,
@@ -255,6 +255,14 @@
                 message: 'Internal Server Error',
                 data:[]
             });
+        } finally {
+            if (connection) {
+                try {
+                    await connection.close();
+                } catch (err) {
+                    console.error(err);
+                }
+            }
         }
         
     }
