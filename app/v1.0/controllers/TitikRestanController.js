@@ -122,10 +122,8 @@
     function formatValue(value) {
         //cek jika value number
         if(!isNaN(value)) {
-            //cek jika value bernilai desimal
-            if ((value % 1) != 0) {
-                value = Math.round(value * 100) / 100;
-            } else if (!value) {
+            //cek jika value bernilai null
+           if (!value) {
                 value = 0;
             }
         } else {
