@@ -81,8 +81,14 @@
             result = await connection.execute( sql, binds, options );
             if(result) {
                 result.rows.forEach(function(rs) {
-                    rs.TGL_REPORT = dateFormat(rs.TGL_REPORT, 'yyyymmdd');
-                    rs.KG_TAKSASI = parseInt(rs.KG_TAKSASI);
+                    for (let key in rs) {
+                        if (key == 'TGL_REPORT') {
+                            rs.TGL_REPORT = dateFormat(rs.TGL_REPORT, 'yyyymmdd');
+                            continue;
+                        }
+                        rs[key] = formatValue(rs[key]);
+
+                    }
                 });
                 return res.send( {
                     status: true, 
@@ -111,6 +117,23 @@
                 }
             }
         }
+    }
+
+    function formatValue(value) {
+        //cek jika value number
+        if(!isNaN(value)) {
+            //cek jika value bernilai desimal
+            if ((value % 1) != 0) {
+                value = Math.round(value * 100) / 100;
+            } else if (!value) {
+                value = 0;
+            }
+        } else {
+            if (!value) {
+                value = "";
+            }
+        }
+        return value;
     }
 
     //get kg taksasi
