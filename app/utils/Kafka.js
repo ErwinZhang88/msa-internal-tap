@@ -45,8 +45,9 @@
 				outOfRangeOffset: 'earliest'
 			};
 			let consumerGroup = new ConsumerGroup(options, ['PAT_MSA_PATROLI_TR_TRACKING', 'PAT_MSA_PATROLI_TM_USER']);
-
+			console.log(config.app.kafka[config.app.env])
 			consumerGroup.on('message', async (message) => {
+				console.log(message);
 				try {
 					if (message) {
 						if (message.topic == 'PAT_MSA_PATROLI_TR_TRACKING') {
@@ -107,6 +108,7 @@
 					};
 					await connection.execute( sql, binds, options);
 					console.log("sukses insert data")
+					console.log(binds)
 				} catch (err) {
 					console.log(err);
 				} finally {

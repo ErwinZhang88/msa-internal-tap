@@ -15,8 +15,8 @@
 				connectString : process.env.DB_URL_DEV
 			},
 			patroliApi: {
-				user          : process.env.DB_USER_PATROLI,
-				password      : process.env.DB_PASSWORD_PATROLI, 
+				user          : process.env.DB_USER_PATROLI_DEV,
+				password      : process.env.DB_PASSWORD_PATROLI_DEV, 
 				connectString : process.env.DB_URL_DEV
 			},
 		},
@@ -27,8 +27,8 @@
 				connectString : process.env.DB_URL_QA
 			},
 			patroliApi: {
-				user          : process.env.DB_USER_PATROLI,
-				password      : process.env.DB_PASSWORD_PATROLI, 
+				user          : process.env.DB_USER_PATROLI_DEV,
+				password      : process.env.DB_PASSWORD_PATROLI_DEV, 
 				connectString : process.env.DB_URL_QA
 			},
 		},
@@ -39,8 +39,8 @@
 				connectString : process.env.DB_URL_PROD
 			},
 			patroliApi: {
-				user          : process.env.DB_USER_PATROLI,
-				password      : process.env.DB_PASSWORD_PATROLI, 
+				user          : process.env.DB_USER_PATROLI_PROD,
+				password      : process.env.DB_PASSWORD_PATROLI_PROD, 
 				connectString : process.env.DB_URL_PROD
 			}
 		}
