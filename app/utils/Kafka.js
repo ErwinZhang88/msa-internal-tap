@@ -71,7 +71,6 @@
 				
 				try {
 					let data = JSON.parse(message.value)
-					console.log(data);
 					let trackCode = data.TRCD
 					let baCode = data.BACD
 					let jalur = data.JLR
