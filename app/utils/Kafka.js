@@ -108,7 +108,7 @@
 					};
 					await connection.execute( sql, binds, options);
 					console.log("sukses insert data")
-					console.log(binds)
+					// console.log(binds)
 				} catch (err) {
 					console.log(err);
 				} finally {
